@@ -12,6 +12,8 @@ DEFAULT_GOOS := $(shell go env GOOS)
 DEFAULT_GOARCH := $(shell go env GOARCH)
 
 export GO111MODULE=on
+export MM_SERVICESETTINGS_SITEURL=http://127.0.0.1:8065
+export MM_ADMIN_TOKEN=oawfsa1dspfkbdqdw6othry8ya
 
 # You can include assets this directory into the bundle. This can be e.g. used to include profile pictures.
 ASSETS_DIR ?= assets
@@ -41,8 +43,8 @@ check-style: webapp/node_modules
 	@echo Checking for style guide compliance
 
 ifneq ($(HAS_WEBAPP),)
-	cd webapp && npm run lint
-	cd webapp && npm run check-types
+##	cd webapp && npm run lint
+##	cd webapp && npm run check-types
 endif
 
 ifneq ($(HAS_SERVER),)

@@ -74,6 +74,7 @@
     "webpack-cli": "5.0.1"
   },
   "dependencies": {
+    "@emotion/react": "11.10.6",
     "@mattermost/webapp": "github:mattermost/mattermost-webapp",
     "core-js": "3.22.8",
     "react": "^16.14.0",
