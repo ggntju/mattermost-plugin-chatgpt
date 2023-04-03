@@ -10,6 +10,8 @@ import {PluginRegistry} from '@/types/mattermost-webapp';
 
 import ChannelHeaderIcon from './components/channel-header-icon/channel-header-icon';
 
+import AdminSetting from './components/admin-settings/admin-settings';
+
 export default class Plugin {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
     public async initialize(registry: PluginRegistry, store: Store<GlobalState, Action<Record<string, unknown>>>) {
@@ -24,6 +26,14 @@ export default class Plugin {
             ChannelHeaderAction,
             'Chatgpt',
             'Chatgpt'
+        )
+
+        registry.registerAdminConsoleCustomSetting(
+            'AdminSetting',
+            AdminSetting,
+            {
+                showTitle: true
+            }
         )
     }
 }

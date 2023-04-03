@@ -14,6 +14,15 @@
     "settings_schema": {
         "header": "",
         "footer": "",
-        "settings": []
+        "settings": [
+            {
+                "key": "AdminSetting",
+                "display_name": "",
+                "type": "custom",
+                "help_text": "",
+                "placeholder": "",
+                "default": null
+            }
+        ]
     }
 }

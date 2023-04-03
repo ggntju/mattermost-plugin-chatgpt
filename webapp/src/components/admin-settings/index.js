@@ -2,7 +2,7 @@ import {connect} from 'react-redux';
 
 import PropTypes from 'prop-types';
 
-import ChannelHeaderIcon from './channel-header-icon';
+import AdminSetting from './admin-settings';
 
 function mapStateToProps(state, ownProps) {
     return {
@@ -10,4 +10,4 @@ function mapStateToProps(state, ownProps) {
     };
 }
 
-export default connect(mapStateToProps)(ChannelHeaderIcon);
+export default connect(mapStateToProps)(AdminSetting);

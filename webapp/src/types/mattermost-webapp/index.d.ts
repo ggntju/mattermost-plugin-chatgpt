@@ -4,4 +4,6 @@ export interface PluginRegistry {
     // Add more if needed from https://developers.mattermost.com/extend/plugins/webapp/reference
 
     registerChannelHeaderButtonAction(icon: any, action: any, dropdownText: string, tooltipText: string)
+
+    registerAdminConsoleCustomSetting(key: string, component: any, options: any)
 }
