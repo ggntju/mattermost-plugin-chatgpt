@@ -1,3 +1,3 @@
-import manifest from '@/../../plugin.json';
+import manifest from '../../plugin.json';
 
 export {manifest};

@@ -2,9 +2,9 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 
-import {Svgs} from '../../constants';
-
 import OpenAIIcon from '../icon';
+
+import {getPostContent} from '../../utils';
 
 export default class AskChatGPT extends React.PureComponent {
 
@@ -27,9 +27,12 @@ export default class AskChatGPT extends React.PureComponent {
         };
     }
 
-    handleClick = (e) => {
+    handleClick = async (e) => {
         e.preventDefault();
-        let postID = this.props.postID;
+        let postID = this.props.postId;
+        const content = await getPostContent(postID);
+        const postMessage = content.message;
+        console.log(postMessage);
     };
 
     render() {

@@ -1,10 +1,12 @@
 import React from 'react';
 
+import {Client4} from 'mattermost-redux/client'
+
 import {Store, Action} from 'redux';
 
 import {GlobalState} from '@mattermost/types/lib/store';
 
-import {manifest} from '@/manifest';
+import {manifest} from './manifest';
 
 import {PluginRegistry} from '@/types/mattermost-webapp';
 
@@ -19,6 +21,8 @@ export default class Plugin {
     public async initialize(registry: PluginRegistry, store: Store<GlobalState, Action<Record<string, unknown>>>) {
         // @see https://developers.mattermost.com/extend/plugins/webapp/reference/
         
+        Client4.setUrl('' + store.getState().entities.general.config.SiteURL);
+
         const ChannelHeaderAction = () => {
             window.open('https://chatgpt.laser-pulse-comm.top');
         }

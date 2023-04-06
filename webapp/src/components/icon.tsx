@@ -5,7 +5,7 @@ type Props = {
 };
 
 export default class OpenAIIcon extends React.PureComponent<Props> {
-    public render() {
+    render() {
         let iconStyle = {};
         if (this.props.type === 'menu') {
             iconStyle = {flex: '0 0 auto', width: '20px', height: '20px', fill: '#0052CC', background: 'white', borderRadius: '50px', padding: '2px'};
