@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import OpenAIIcon from '../icon';
 
-import {getPostContent} from '../../utils';
+import {getPostContent, replyPost} from '../../utils';
 
 export default class AskChatGPT extends React.PureComponent {
 
@@ -32,7 +32,9 @@ export default class AskChatGPT extends React.PureComponent {
         let postID = this.props.postId;
         const content = await getPostContent(postID);
         const postMessage = content.message;
-        console.log(postMessage);
+        const channelID = content.channel_id;
+        
+        replyPost(channelID, postID, 'test_reply');
     };
 
     render() {
