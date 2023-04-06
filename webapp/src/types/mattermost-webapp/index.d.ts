@@ -6,4 +6,6 @@ export interface PluginRegistry {
     registerChannelHeaderButtonAction(icon: any, action: any, dropdownText: string, tooltipText: string)
 
     registerAdminConsoleCustomSetting(key: string, component: any, options: any)
+
+    registerPostDropdownMenuComponent(component: React.ElementType)
 }

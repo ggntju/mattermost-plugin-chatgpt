@@ -12,6 +12,8 @@ import ChannelHeaderIcon from './components/channel-header-icon/channel-header-i
 
 import AdminSetting from './components/admin-settings/admin-settings';
 
+import AskChatGPT from './components/ask-chatgpt/ask-chatgpt-postdropdown';
+
 export default class Plugin {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
     public async initialize(registry: PluginRegistry, store: Store<GlobalState, Action<Record<string, unknown>>>) {
@@ -36,6 +38,8 @@ export default class Plugin {
             }
         )
 
+        registry.registerPostDropdownMenuComponent(AskChatGPT)
+        
     }
 }
 
