@@ -2,7 +2,7 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 
-export default class AdminSetting extends React.PureComponent {
+export default class AdminSetting extends React.Component {
     static propTypes = {
         id: PropTypes.string.isRequired,
         label: PropTypes.string.isRequired,
@@ -23,7 +23,13 @@ export default class AdminSetting extends React.PureComponent {
 
         this.state = {
             showSecretMessage: false,
+            admin_setting: {
+                'SECRET_KEY': window.localStorage.getItem('SECRET_KEY'),
+                'PROXY_URL': window.localStorage.getItem('PROXY_URL') == ''? 'https://api.openai.com': window.localStorage.getItem('PROXY_URL'),
+            }
         };
+
+        console.log('admin-settings')
     }
 
     componentDidMount() {
@@ -57,9 +63,24 @@ export default class AdminSetting extends React.PureComponent {
         });
     }
 
-    handleChange = (e) => {
-        this.props.onChange(this.props.id, e.target.value);
+    handleAPIKeyChange = (e) => {
+        let new_admin_setting = this.state.admin_setting;
+        new_admin_setting['SECRET_KEY'] = e.target.value;
+        this.setState({
+            admin_setting: new_admin_setting
+        })
+        this.props.onChange(this.props.id, new_admin_setting);
         window.localStorage.setItem('SECRET_KEY', e.target.value);
+    }
+
+    handleProxyURLChange = (e) => {
+        let new_admin_setting = this.state.admin_setting;
+        new_admin_setting['PROXY_URL'] = e.target.value;
+        this.setState({
+            admin_setting: new_admin_setting
+        })
+        this.props.onChange(this.props.id, new_admin_setting);
+        window.localStorage.setItem('PROXY_URL', e.target.value);
     }
 
     render() {
@@ -75,9 +96,9 @@ export default class AdminSetting extends React.PureComponent {
                         style={style.input}
                         className='form-control input'
                         rows={1}
-                        value={this.props.value}
+                        value={this.state.admin_setting['SECRET_KEY']}
                         disabled={this.props.disabled || this.props.setByEnv}
-                        onInput={this.handleChange}
+                        onInput={this.handleAPIKeyChange}
                     />
                 }
                 <div>
@@ -90,6 +111,22 @@ export default class AdminSetting extends React.PureComponent {
                         {!this.state.showSecretMessage && 'Show OPENAI API KEY'}
                     </button>
                 </div>
+
+                {
+                    <div style={style.text}>
+                        {'OPENAI API PROXY URL'}
+                    </div>
+                }
+                {
+                    <textarea
+                        style={style.input}
+                        className='form-control proxy_input'
+                        rows={1}
+                        value={this.state.admin_setting['PROXY_URL']}
+                        disabled={this.props.disabled || this.props.setByEnv}
+                        onInput={this.handleProxyURLChange}
+                    />
+                }
             </React.Fragment>
         );
     }

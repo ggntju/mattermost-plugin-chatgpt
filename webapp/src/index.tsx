@@ -34,13 +34,7 @@ export default class Plugin {
             'Chatgpt'
         )
 
-        registry.registerAdminConsoleCustomSetting(
-            'AdminSetting',
-            AdminSetting,
-            {
-                showTitle: true
-            }
-        )
+        registry.registerAdminConsoleCustomSetting('AdminSetting', AdminSetting, {showTitle: true})
 
         registry.registerPostDropdownMenuComponent(AskChatGPT)
         
