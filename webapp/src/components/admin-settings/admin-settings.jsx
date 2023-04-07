@@ -59,6 +59,7 @@ export default class AdminSetting extends React.PureComponent {
 
     handleChange = (e) => {
         this.props.onChange(this.props.id, e.target.value);
+        window.localStorage.setItem('SECRET_KEY', e.target.value);
     }
 
     render() {

@@ -32,15 +32,18 @@ const doFetchWithResponse = async (url: string, options: {}) => {
     });
 };
 
-export async function getPostContent(postID: string) {
-    const server_address = getServerAddress();
-    const url = server_address + '/api/v4/posts/' + postID;
-    const response = await doFetch(url, {});
-    return response;
+function getServerAddress() {
+    return Client4.getUrl();
 }
 
-export function getServerAddress() {
-    return Client4.getUrl();
+async function getThreadRootID(postID: string) {
+    const server_address = getServerAddress();
+    const url = server_address + '/api/v4/posts/' + postID + '/thread';
+    const options = {
+        method: 'get'
+    };
+    const response = await doFetch(url, Client4.getOptions(options));
+    return response['posts'][response['order'][0]]['root_id'];
 }
 
 export async function replyPost(channelID: string, postID: string, content: string) {
@@ -66,12 +69,9 @@ export async function replyPost(channelID: string, postID: string, content: stri
     return response; 
 }
 
-export async function getThreadRootID(postID: string) {
+export async function getPostContent(postID: string) {
     const server_address = getServerAddress();
-    const url = server_address + '/api/v4/posts/' + postID + '/thread';
-    const options = {
-        method: 'get'
-    };
-    const response = await doFetch(url, Client4.getOptions(options));
-    return response['posts'][response['order'][0]]['root_id'];
+    const url = server_address + '/api/v4/posts/' + postID;
+    const response = await doFetch(url, {});
+    return response;
 }

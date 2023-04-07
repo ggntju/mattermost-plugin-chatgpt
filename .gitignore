@@ -5,3 +5,6 @@ dist/
 
 # Jetbrains
 .idea/
+
+# config
+*.config*

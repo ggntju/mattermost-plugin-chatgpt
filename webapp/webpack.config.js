@@ -43,6 +43,7 @@ const config = {
             path.resolve(__dirname),
         ],
         extensions: ['*', '.js', '.jsx', '.ts', '.tsx'],
+        // fallback: { "path": false , "os": false, "fs": false},
     },
     module: {
         rules: [
