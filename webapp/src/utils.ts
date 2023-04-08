@@ -1,9 +1,5 @@
-const axios = require('axios').default;
-import bodyParser from 'body-parser';
-import {Configuration, OpenAIApi} from "openai";
 import {Client4} from 'mattermost-redux/client'
 import {ClientError} from 'mattermost-redux/client/client4';
-import {Post} from 'mattermost-redux/types/posts';
 import {Options} from 'mattermost-redux/types/client4';
 
 const doFetch = async (url: string, options: any) => {
@@ -59,7 +55,7 @@ export async function replyPost(channelID: string, postID: string, content: stri
         body: {
             channel_id: channelID,
             message: content,
-            root_id: thread_root_id
+            pending_post_id: thread_root_id
         }    
     };
 
@@ -79,15 +75,33 @@ export async function getPostContent(postID: string) {
 }
 
 export async function getPromptResponse(key: string, prompt: string, base_url: string) {
-    const configuration = new Configuration({
-        apiKey: key,
-        basePath: base_url,
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            "Authorization": "Bearer " + key,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            "model": "gpt-3.5-turbo",
+            "messages": [
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ],
+            "max_tokens": 2048
+        })
+    };
+
+    const res = await fetch(base_url + "/v1/chat/completions", requestOptions)
+    .then(response => response.text())
+    .then(result => {
+        return JSON.parse(result);
+    })
+    .catch(err => {
+        console.log('error', err);
+        throw err;
     });
-    const openai = new OpenAIApi(configuration);
-    const completion = await openai.createChatCompletion({
-        model: "gpt-3.5-turbo",
-        messages: [{role: "user", content: prompt}],
-        max_tokens: 2048
-    });
-    return completion;
+    
+    return res;
 }

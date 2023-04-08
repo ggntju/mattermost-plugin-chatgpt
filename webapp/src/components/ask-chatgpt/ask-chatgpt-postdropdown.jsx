@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import OpenAIIcon from '../icon';
 
-import {getPostContent, replyPost} from '../../utils';
+import {getPostContent, getPromptResponse, replyPost} from '../../utils';
 
 export default class AskChatGPT extends React.PureComponent {
 
@@ -34,7 +34,20 @@ export default class AskChatGPT extends React.PureComponent {
         const postMessage = content.message;
         const channelID = content.channel_id;
         
-        replyPost(channelID, postID, 'test_reply');
+        // console.log(postMessage);
+        // replyPost(channelID, postID, 'test_reply');
+
+        try {
+            const response = await getPromptResponse(window.localStorage.getItem('SECRET_KEY'), postMessage, window.localStorage.getItem('PROXY_URL'));
+            if(response['error']) {
+                replyPost(channelID, postID, response['error']['message']);
+            }
+            if(response['id']) {
+                replyPost(channelID, postID, 'Reply from ChatGPT: ' + response['choices'][0]['message']['content']);
+            }
+        } catch(err) {
+            replyPost(channelID, postID, 'Request Failed, Please Try again Later');
+        }
     };
 
     render() {
@@ -47,7 +60,7 @@ export default class AskChatGPT extends React.PureComponent {
                 role='menuitem'
                 onClick={this.handleClick}
             >
-                <OpenAIIcon type='menu'/>
+                {/* <OpenAIIcon type='menu'/> */}
                     {'Ask ChatGPT'}
             </button>
         );

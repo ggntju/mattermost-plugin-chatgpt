@@ -20,16 +20,14 @@ export default class AdminSetting extends React.Component {
 
     constructor(props) {
         super(props);
-
         this.state = {
             showSecretMessage: false,
             admin_setting: {
                 'SECRET_KEY': window.localStorage.getItem('SECRET_KEY'),
                 'PROXY_URL': window.localStorage.getItem('PROXY_URL') == ''? 'https://api.openai.com': window.localStorage.getItem('PROXY_URL'),
+                'WEBSITE_URL': window.localStorage.getItem('WEBSITE_URL') == ''? 'https://openai.com/': window.localStorage.getItem('WEBSITE_URL'),
             }
         };
-
-        console.log('admin-settings')
     }
 
     componentDidMount() {
@@ -83,9 +81,35 @@ export default class AdminSetting extends React.Component {
         window.localStorage.setItem('PROXY_URL', e.target.value);
     }
 
+    handleWebsiteURLChange = (e) => {
+        let new_admin_setting = this.state.admin_setting;
+        new_admin_setting['WEBSITE_URL'] = e.target.value;
+        this.setState({
+            admin_setting: new_admin_setting
+        })
+        this.props.onChange(this.props.id, new_admin_setting);
+        window.localStorage.setItem('WEBSITE_URL', e.target.value);
+    }
+
     render() {
         return (
             <React.Fragment>
+                {
+                    <div style={style.text}>
+                        {'OPENAI Website'}
+                    </div>
+                }
+                {
+                    <textarea
+                        style={style.input}
+                        className='form-control website_input'
+                        rows={1}
+                        value={this.state.admin_setting['WEBSITE_URL']}
+                        disabled={this.props.disabled || this.props.setByEnv}
+                        onInput={this.handleWebsiteURLChange}
+                    />
+                }
+
                 {
                     <div style={style.text}>
                         {'OPENAI API KEY'}

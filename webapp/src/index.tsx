@@ -24,7 +24,7 @@ export default class Plugin {
         Client4.setUrl('' + store.getState().entities.general.config.SiteURL);
 
         const ChannelHeaderAction = () => {
-            window.open('https://chatgpt.laser-pulse-comm.top');
+            window.open('' + window.localStorage.getItem('WEBSITE_URL'));
         }
 
         registry.registerChannelHeaderButtonAction(
