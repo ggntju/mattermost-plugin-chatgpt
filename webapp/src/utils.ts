@@ -1,4 +1,6 @@
 const axios = require('axios').default;
+import bodyParser from 'body-parser';
+import {Configuration, OpenAIApi} from "openai";
 import {Client4} from 'mattermost-redux/client'
 import {ClientError} from 'mattermost-redux/client/client4';
 import {Post} from 'mattermost-redux/types/posts';
@@ -74,4 +76,18 @@ export async function getPostContent(postID: string) {
     const url = server_address + '/api/v4/posts/' + postID;
     const response = await doFetch(url, {});
     return response;
+}
+
+export async function getPromptResponse(key: string, prompt: string, base_url: string) {
+    const configuration = new Configuration({
+        apiKey: key,
+        basePath: base_url,
+    });
+    const openai = new OpenAIApi(configuration);
+    const completion = await openai.createChatCompletion({
+        model: "gpt-3.5-turbo",
+        messages: [{role: "user", content: prompt}],
+        max_tokens: 2048
+    });
+    return completion;
 }
