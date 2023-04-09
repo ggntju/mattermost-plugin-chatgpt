@@ -47,15 +47,13 @@ async function getThreadRootID(postID: string) {
 export async function replyPost(channelID: string, postID: string, content: string) {
     const server_address = getServerAddress();
     const url = server_address + '/api/v4/posts';
-
     const thread_root_id = await getThreadRootID(postID);
-
     const options: Options = {
         method: 'post',
         body: {
             channel_id: channelID,
             message: content,
-            pending_post_id: thread_root_id
+            root_id: thread_root_id == "" ? postID: thread_root_id
         }    
     };
 
