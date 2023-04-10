@@ -75,7 +75,8 @@ export async function replyPost(channelID: string, postID: string, content: stri
         headers: {
             "Authorization": "Bearer " + bot_token,
             "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "http://localhost:8065",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Headers": "Content-Type, Authorization"
         },
         credentials: "omit"
     });
@@ -95,7 +96,7 @@ export async function getPromptResponse(key: string, prompt: string, base_url: s
         method: 'POST',
         headers: {
             "Authorization": "Bearer " + key,
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
         },
         body: JSON.stringify({
             "model": "gpt-3.5-turbo",
@@ -112,6 +113,7 @@ export async function getPromptResponse(key: string, prompt: string, base_url: s
     const res = await fetch(base_url + "/v1/chat/completions", requestOptions)
     .then(response => response.text())
     .then(result => {
+        console.log('result', result);
         return JSON.parse(result);
     })
     .catch(err => {
