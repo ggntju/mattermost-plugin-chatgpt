@@ -22,6 +22,7 @@ type configuration struct {
 		SECRET_KEY  string
 		PROXY_URL   string
 		WEBSITE_URL string
+		BOT_TOKEN   string
 	}
 }
 

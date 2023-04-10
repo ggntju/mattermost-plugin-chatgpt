@@ -86,6 +86,15 @@ export default class AdminSetting extends React.Component {
         this.props.onChange(this.props.id, new_admin_setting);
     }
 
+    handleBotAccessTokenChange = (e) => {
+        let new_admin_setting = this.state.admin_setting;
+        new_admin_setting['BOT_TOKEN'] = e.target.value;
+        this.setState({
+            admin_setting: new_admin_setting
+        })
+        this.props.onChange(this.props.id, new_admin_setting);
+    }
+
     render() {
         return (
             <React.Fragment>
@@ -144,6 +153,22 @@ export default class AdminSetting extends React.Component {
                         value={this.props.value['PROXY_URL']}
                         disabled={this.props.disabled || this.props.setByEnv}
                         onInput={this.handleProxyURLChange}
+                    />
+                }
+
+                {
+                    <div style={style.text}>
+                        {'Mattermost Bot Account Access Token'}
+                    </div>
+                }
+                {
+                    <textarea
+                        style={style.input}
+                        className='form-control bot_token_input'
+                        rows={1}
+                        value={this.props.value['BOT_TOKEN']}
+                        disabled={this.props.disabled || this.props.setByEnv}
+                        onInput={this.handleBotAccessTokenChange}
                     />
                 }
             </React.Fragment>

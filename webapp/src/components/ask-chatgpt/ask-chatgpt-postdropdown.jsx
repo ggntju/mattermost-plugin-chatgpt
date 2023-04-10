@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import OpenAIIcon from '../icon';
 
-import {getPostContent, getPromptResponse, replyPost} from '../../utils';
+import {getPostContent, getPromptResponse, replyPost, handleReadAdminDataFromServer} from '../../utils';
 
 export default class AskChatGPT extends React.PureComponent {
 
@@ -33,19 +33,18 @@ export default class AskChatGPT extends React.PureComponent {
         const content = await getPostContent(postID);
         const postMessage = content.message;
         const channelID = content.channel_id;
-
-        // replyPost(channelID, postID, 'test_reply');
+        const admin_data = await handleReadAdminDataFromServer();
 
         try {
-            const response = await getPromptResponse(window.localStorage.getItem('SECRET_KEY'), postMessage, window.localStorage.getItem('PROXY_URL'));
+            const response = await getPromptResponse(admin_data['SECRET_KEY'], postMessage, admin_data['PROXY_URL']);
             if(response['error']) {
-                replyPost(channelID, postID, response['error']['message']);
+                replyPost(channelID, postID, response['error']['message'], admin_data['BOT_TOKEN']);
             }
             if(response['id']) {
-                replyPost(channelID, postID, 'Reply from ChatGPT: ' + response['choices'][0]['message']['content']);
+                replyPost(channelID, postID, 'Reply from ChatGPT: ' + response['choices'][0]['message']['content'], admin_data['BOT_TOKEN']);
             }
         } catch(err) {
-            replyPost(channelID, postID, 'Request Failed, Please Try again Later');
+            replyPost(channelID, postID, 'Request Failed, Please Try again Later', admin_data['BOT_TOKEN']);
         }
     };
 

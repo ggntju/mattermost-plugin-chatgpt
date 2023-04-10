@@ -53,7 +53,7 @@ async function getThreadRootID(postID: string) {
     return response['posts'][response['order'][0]]['root_id'];
 }
 
-export async function replyPost(channelID: string, postID: string, content: string) {
+export async function replyPost(channelID: string, postID: string, content: string, bot_token: string) {
     const server_address = getServerAddress();
     const url = server_address + '/api/v4/posts';
     const thread_root_id = await getThreadRootID(postID);
@@ -62,13 +62,22 @@ export async function replyPost(channelID: string, postID: string, content: stri
         body: {
             channel_id: channelID,
             message: content,
-            root_id: thread_root_id == "" ? postID: thread_root_id
-        }    
+            root_id: thread_root_id == "" ? postID: thread_root_id,
+            props: {
+                from_bot: true
+            }
+        }
     };
 
-    const response = await doFetch(url, {
+    const response = await fetch(url, {
         method: 'POST',
         body: JSON.stringify(options['body']),
+        headers: {
+            "Authorization": "Bearer " + bot_token,
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "http://localhost:8065",
+        },
+        credentials: "omit"
     });
 
     return response; 
@@ -111,10 +120,6 @@ export async function getPromptResponse(key: string, prompt: string, base_url: s
     });
     
     return res;
-}
-
-export function handleSaveAdminDataToServer(jsonData: {}) {
-    
 }
 
 export async function handleReadAdminDataFromServer() {
