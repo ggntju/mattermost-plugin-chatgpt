@@ -1,7 +1,8 @@
 import {Client4} from 'mattermost-redux/client';
 import {ClientError} from 'mattermost-redux/client/client4';
 import {Options} from 'mattermost-redux/types/client4';
-import * as fs from 'fs';
+import {manifest} from './manifest';
+import {Buffer} from 'buffer';
 
 export interface Iadmin_data {
     SECRET_KEY: string,
@@ -20,6 +21,7 @@ const doFetchWithResponse = async (url: string, options: {}) => {
     
     let data;
     if (response.ok) {
+        
         data = await response.json();
 
         return {
@@ -116,9 +118,9 @@ export function handleSaveAdminDataToServer(jsonData: {}) {
 }
 
 export async function handleReadAdminDataFromServer() {
-    return {
-        SECRET_KEY: "",
-        PROXY_URL: "",
-        WEBSITE_URL: ""
-    }
+    const server_address = getServerAddress();
+    const url = server_address + '/plugins/' + manifest.id + '/configuration-data';
+    const response = await fetch(url, {});
+    const buf = Buffer.from((await response.text()).toString(), 'base64').toString();
+    return JSON.parse(buf)['AdminSetting'];
 }

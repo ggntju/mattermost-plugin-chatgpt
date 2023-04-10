@@ -23,13 +23,10 @@ export default class Plugin {
     public async initialize(registry: PluginRegistry, store: Store<GlobalState, Action<Record<string, unknown>>>) {
         // @see https://developers.mattermost.com/extend/plugins/webapp/reference/
         
-        const admin_data = await handleReadAdminDataFromServer();
-
-        // console.log('index.tsx', admin_data);
-
         Client4.setUrl('' + store.getState().entities.general.config.SiteURL);
 
-        const ChannelHeaderAction = () => {
+        const ChannelHeaderAction = async () => {
+            const admin_data = await handleReadAdminDataFromServer();
             window.open('' + admin_data['WEBSITE_URL']);
         }
 

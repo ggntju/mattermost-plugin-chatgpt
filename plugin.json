@@ -33,8 +33,5 @@
                 "default": null
             }
         ]
-    },
-    "props": {
-        "OPENAI_API_KEY": "Key"
     }
 }

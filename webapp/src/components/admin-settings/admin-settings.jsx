@@ -2,7 +2,7 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 
-import {handleReadAdminDataFromServer, handleSaveAdminDataToServer} from '../../utils';
+import {handleReadAdminDataFromServer} from '../../utils';
 
 export default class AdminSetting extends React.Component {
     static propTypes = {
@@ -22,14 +22,9 @@ export default class AdminSetting extends React.Component {
 
     constructor(props) {
         super(props);
-        const admin_data = handleReadAdminDataFromServer();
         this.state = {
             showSecretMessage: false,
-            admin_setting: {
-                'SECRET_KEY': admin_data['SECRET_KEY'],
-                'PROXY_URL': admin_data['PROXY_URL'] == ''? 'https://api.openai.com': admin_data['PROXY_URL'],
-                'WEBSITE_URL': admin_data['WEBSITE_URL'] == ''? 'https://openai.com/': admin_data['WEBSITE_URL'],
-            }
+            admin_setting: this.props.value,
         };
     }
 
@@ -71,7 +66,6 @@ export default class AdminSetting extends React.Component {
             admin_setting: new_admin_setting
         })
         this.props.onChange(this.props.id, new_admin_setting);
-        handleSaveAdminDataToServer(new_admin_setting);
     }
 
     handleProxyURLChange = (e) => {
@@ -81,7 +75,6 @@ export default class AdminSetting extends React.Component {
             admin_setting: new_admin_setting
         })
         this.props.onChange(this.props.id, new_admin_setting);
-        handleSaveAdminDataToServer(new_admin_setting);
     }
 
     handleWebsiteURLChange = (e) => {
@@ -91,7 +84,6 @@ export default class AdminSetting extends React.Component {
             admin_setting: new_admin_setting
         })
         this.props.onChange(this.props.id, new_admin_setting);
-        handleSaveAdminDataToServer(new_admin_setting);
     }
 
     render() {
@@ -107,7 +99,7 @@ export default class AdminSetting extends React.Component {
                         style={style.input}
                         className='form-control website_input'
                         rows={1}
-                        value={this.state.admin_setting['WEBSITE_URL']}
+                        value={this.props.value['WEBSITE_URL']}
                         disabled={this.props.disabled || this.props.setByEnv}
                         onInput={this.handleWebsiteURLChange}
                     />
@@ -123,7 +115,7 @@ export default class AdminSetting extends React.Component {
                         style={style.input}
                         className='form-control input'
                         rows={1}
-                        value={this.state.admin_setting['SECRET_KEY']}
+                        value={this.props.value['SECRET_KEY']}
                         disabled={this.props.disabled || this.props.setByEnv}
                         onInput={this.handleAPIKeyChange}
                     />
@@ -149,7 +141,7 @@ export default class AdminSetting extends React.Component {
                         style={style.input}
                         className='form-control proxy_input'
                         rows={1}
-                        value={this.state.admin_setting['PROXY_URL']}
+                        value={this.props.value['PROXY_URL']}
                         disabled={this.props.disabled || this.props.setByEnv}
                         onInput={this.handleProxyURLChange}
                     />
