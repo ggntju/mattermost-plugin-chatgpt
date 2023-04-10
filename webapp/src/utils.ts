@@ -1,6 +1,13 @@
-import {Client4} from 'mattermost-redux/client'
+import {Client4} from 'mattermost-redux/client';
 import {ClientError} from 'mattermost-redux/client/client4';
 import {Options} from 'mattermost-redux/types/client4';
+import * as fs from 'fs';
+
+export interface Iadmin_data {
+    SECRET_KEY: string,
+    PROXY_URL: string,
+    WEBSITE_URL: string,
+}
 
 const doFetch = async (url: string, options: any) => {
     const {data} = await doFetchWithResponse(url, options);
@@ -102,4 +109,16 @@ export async function getPromptResponse(key: string, prompt: string, base_url: s
     });
     
     return res;
+}
+
+export function handleSaveAdminDataToServer(jsonData: {}) {
+    
+}
+
+export async function handleReadAdminDataFromServer() {
+    return {
+        SECRET_KEY: "",
+        PROXY_URL: "",
+        WEBSITE_URL: ""
+    }
 }

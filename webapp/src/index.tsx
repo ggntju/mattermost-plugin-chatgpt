@@ -16,15 +16,21 @@ import AdminSetting from './components/admin-settings/admin-settings';
 
 import AskChatGPT from './components/ask-chatgpt/ask-chatgpt-postdropdown';
 
+import {handleReadAdminDataFromServer} from './utils';
+
 export default class Plugin {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
     public async initialize(registry: PluginRegistry, store: Store<GlobalState, Action<Record<string, unknown>>>) {
         // @see https://developers.mattermost.com/extend/plugins/webapp/reference/
         
+        const admin_data = await handleReadAdminDataFromServer();
+
+        // console.log('index.tsx', admin_data);
+
         Client4.setUrl('' + store.getState().entities.general.config.SiteURL);
 
         const ChannelHeaderAction = () => {
-            window.open('' + window.localStorage.getItem('WEBSITE_URL'));
+            window.open('' + admin_data['WEBSITE_URL']);
         }
 
         registry.registerChannelHeaderButtonAction(

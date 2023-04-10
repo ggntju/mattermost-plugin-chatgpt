@@ -35,7 +35,7 @@ const config = {
     ],
     resolve: {
         alias: {
-            '@': path.resolve(__dirname, 'src'),
+            'src': path.resolve(__dirname, 'src'),
         },
         modules: [
             'src',
@@ -43,7 +43,6 @@ const config = {
             path.resolve(__dirname),
         ],
         extensions: ['*', '.js', '.jsx', '.ts', '.tsx'],
-        // fallback: { "path": false , "os": false, "fs": false},
     },
     module: {
         rules: [

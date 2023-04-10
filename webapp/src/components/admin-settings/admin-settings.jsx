@@ -2,6 +2,8 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 
+import {handleReadAdminDataFromServer, handleSaveAdminDataToServer} from '../../utils';
+
 export default class AdminSetting extends React.Component {
     static propTypes = {
         id: PropTypes.string.isRequired,
@@ -20,12 +22,13 @@ export default class AdminSetting extends React.Component {
 
     constructor(props) {
         super(props);
+        const admin_data = handleReadAdminDataFromServer();
         this.state = {
             showSecretMessage: false,
             admin_setting: {
-                'SECRET_KEY': window.localStorage.getItem('SECRET_KEY'),
-                'PROXY_URL': window.localStorage.getItem('PROXY_URL') == ''? 'https://api.openai.com': window.localStorage.getItem('PROXY_URL'),
-                'WEBSITE_URL': window.localStorage.getItem('WEBSITE_URL') == ''? 'https://openai.com/': window.localStorage.getItem('WEBSITE_URL'),
+                'SECRET_KEY': admin_data['SECRET_KEY'],
+                'PROXY_URL': admin_data['PROXY_URL'] == ''? 'https://api.openai.com': admin_data['PROXY_URL'],
+                'WEBSITE_URL': admin_data['WEBSITE_URL'] == ''? 'https://openai.com/': admin_data['WEBSITE_URL'],
             }
         };
     }
@@ -68,7 +71,7 @@ export default class AdminSetting extends React.Component {
             admin_setting: new_admin_setting
         })
         this.props.onChange(this.props.id, new_admin_setting);
-        window.localStorage.setItem('SECRET_KEY', e.target.value);
+        handleSaveAdminDataToServer(new_admin_setting);
     }
 
     handleProxyURLChange = (e) => {
@@ -78,7 +81,7 @@ export default class AdminSetting extends React.Component {
             admin_setting: new_admin_setting
         })
         this.props.onChange(this.props.id, new_admin_setting);
-        window.localStorage.setItem('PROXY_URL', e.target.value);
+        handleSaveAdminDataToServer(new_admin_setting);
     }
 
     handleWebsiteURLChange = (e) => {
@@ -88,7 +91,7 @@ export default class AdminSetting extends React.Component {
             admin_setting: new_admin_setting
         })
         this.props.onChange(this.props.id, new_admin_setting);
-        window.localStorage.setItem('WEBSITE_URL', e.target.value);
+        handleSaveAdminDataToServer(new_admin_setting);
     }
 
     render() {
