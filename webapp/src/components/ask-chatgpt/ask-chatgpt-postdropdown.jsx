@@ -33,8 +33,7 @@ export default class AskChatGPT extends React.PureComponent {
         const content = await getPostContent(postID);
         const postMessage = content.message;
         const channelID = content.channel_id;
-        
-        // console.log(postMessage);
+
         // replyPost(channelID, postID, 'test_reply');
 
         try {

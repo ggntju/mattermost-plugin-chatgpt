@@ -67,8 +67,8 @@ export async function replyPost(channelID: string, postID: string, content: stri
     };
 
     const response = await doFetch(url, {
-        method: 'post',
-        body: JSON.stringify(options['body'])
+        method: 'POST',
+        body: JSON.stringify(options['body']),
     });
 
     return response; 
