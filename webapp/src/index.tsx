@@ -39,7 +39,7 @@ export default class Plugin {
 
         registry.registerAdminConsoleCustomSetting('AdminSetting', AdminSetting, {showTitle: true})
 
-        registry.registerPostDropdownMenuComponent(AskChatGPT)
+        // registry.registerPostDropdownMenuComponent(AskChatGPT)
         
     }
 }

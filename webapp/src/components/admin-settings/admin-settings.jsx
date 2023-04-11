@@ -2,7 +2,7 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 
-import {handleReadAdminDataFromServer} from '../../utils';
+import {getUserID} from '../../utils';
 
 export default class AdminSetting extends React.Component {
     static propTypes = {
@@ -95,6 +95,19 @@ export default class AdminSetting extends React.Component {
         this.props.onChange(this.props.id, new_admin_setting);
     }
 
+    handleBotUsernameChange = async (e) => {
+        let new_admin_setting = this.state.admin_setting;
+        new_admin_setting['BOT_USERNAME'] = e.target.value;
+        const bot_userID = await getUserID(this.state.admin_setting['BOT_TOKEN'], e.target.value);
+        if(bot_userID != "") {
+            new_admin_setting['BOT_USERID'] = bot_userID;
+        }
+        this.setState({
+            admin_setting: new_admin_setting
+        })
+        this.props.onChange(this.props.id, new_admin_setting);
+    }
+
     render() {
         return (
             <React.Fragment>
@@ -169,6 +182,22 @@ export default class AdminSetting extends React.Component {
                         value={this.props.value['BOT_TOKEN']}
                         disabled={this.props.disabled || this.props.setByEnv}
                         onInput={this.handleBotAccessTokenChange}
+                    />
+                }
+
+                {
+                    <div style={style.text}>
+                        {'Mattermost Bot Account User Name'}
+                    </div>
+                }
+                {
+                    <textarea
+                        style={style.input}
+                        className='form-control bot_username_input'
+                        rows={1}
+                        value={this.props.value['BOT_USERNAME']}
+                        disabled={this.props.disabled || this.props.setByEnv}
+                        onInput={this.handleBotUsernameChange}
                     />
                 }
             </React.Fragment>

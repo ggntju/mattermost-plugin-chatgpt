@@ -19,10 +19,12 @@ import (
 // copy appropriate for your types.
 type configuration struct {
 	AdminSetting struct {
-		SECRET_KEY  string
-		PROXY_URL   string
-		WEBSITE_URL string
-		BOT_TOKEN   string
+		SECRET_KEY   string
+		PROXY_URL    string
+		WEBSITE_URL  string
+		BOT_TOKEN    string
+		BOT_USERNAME string
+		BOT_USERID   string
 	}
 }
 

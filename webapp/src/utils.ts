@@ -84,6 +84,45 @@ export async function replyPost(channelID: string, postID: string, content: stri
     return response; 
 }
 
+export async function getUserID(bot_token: string, bot_username: string) {
+    const server_address = getServerAddress();
+    const url = server_address + '/api/v4/users/usernames';
+    const options: Options = {
+        method: 'POST',
+        body: JSON.stringify([bot_username]),
+        headers: {
+            "Authorization": "Bearer " + bot_token,
+            "Content-Type": "application/json",
+        }
+    };
+    const response = await doFetch(url, Client4.getOptions(options));
+    if(response.length > 0) {
+        return response[0]["id"]; 
+    } else {
+        return "";
+    }
+}
+
+export async function createDirectChannel(bot_userID: string, bot_token: string, userID: string) {
+    const server_address = getServerAddress();
+    const url = server_address + '/api/v4/channels/direct';
+    const options: Options = {
+        method: 'POST',
+        body: JSON.stringify([bot_userID, userID]),
+        headers: {
+            "Authorization": "Bearer " + bot_token,
+            "Content-Type": "application/json",
+        }
+    };
+    const response = await doFetch(url, Client4.getOptions(options));
+    // console.log('response', JSON.stringify(response));
+    if(response) {
+        return response["id"]; 
+    } else {
+        return "";
+    }
+}
+
 export async function getPostContent(postID: string) {
     const server_address = getServerAddress();
     const url = server_address + '/api/v4/posts/' + postID;
@@ -110,18 +149,16 @@ export async function getPromptResponse(key: string, prompt: string, base_url: s
         })
     };
 
-    const res = await fetch(base_url + "/v1/chat/completions", requestOptions)
+    fetch(base_url + "/v1/chat/completions", requestOptions)
     .then(response => response.text())
     .then(result => {
-        console.log('result', result);
+        // console.log('result', result);
         return JSON.parse(result);
     })
     .catch(err => {
         console.log('error', err);
         throw err;
     });
-    
-    return res;
 }
 
 export async function handleReadAdminDataFromServer() {
