@@ -137,7 +137,7 @@ export default class AdminSetting extends React.Component {
                         style={style.input}
                         className='form-control input'
                         rows={1}
-                        value={this.props.value['SECRET_KEY']}
+                        value={this.props.value == null ? "" : this.props.value['SECRET_KEY']}
                         disabled={this.props.disabled || this.props.setByEnv}
                         onInput={this.handleAPIKeyChange}
                     />
@@ -163,7 +163,7 @@ export default class AdminSetting extends React.Component {
                         style={style.input}
                         className='form-control proxy_input'
                         rows={1}
-                        value={this.props.value['PROXY_URL']}
+                        value={this.props.value == null ? "" : this.props.value['PROXY_URL']}
                         disabled={this.props.disabled || this.props.setByEnv}
                         onInput={this.handleProxyURLChange}
                     />
@@ -179,7 +179,7 @@ export default class AdminSetting extends React.Component {
                         style={style.input}
                         className='form-control bot_token_input'
                         rows={1}
-                        value={this.props.value['BOT_TOKEN']}
+                        value={this.props.value == null ? "" : this.props.value['BOT_TOKEN']}
                         disabled={this.props.disabled || this.props.setByEnv}
                         onInput={this.handleBotAccessTokenChange}
                     />
@@ -195,7 +195,7 @@ export default class AdminSetting extends React.Component {
                         style={style.input}
                         className='form-control bot_username_input'
                         rows={1}
-                        value={this.props.value['BOT_USERNAME']}
+                        value={this.props.value == null ? "" : this.props.value['BOT_USERNAME']}
                         disabled={this.props.disabled || this.props.setByEnv}
                         onInput={this.handleBotUsernameChange}
                     />
