@@ -1,0 +1,10 @@
+dist/
+
+# Mac
+.DS_Store
+
+# Jetbrains
+.idea/
+
+# config
+*admin.json*
