@@ -26,8 +26,8 @@ export default class Plugin {
         Client4.setUrl('' + store.getState().entities.general.config.SiteURL);
 
         const ChannelHeaderAction = async () => {
-            const admin_data = await handleReadAdminDataFromServer();
-            window.open('' + admin_data['WEBSITE_URL']);
+            // const admin_data = await handleReadAdminDataFromServer();
+            window.open("https://openai.com/");
         }
 
         registry.registerChannelHeaderButtonAction(

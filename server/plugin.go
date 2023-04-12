@@ -2,9 +2,7 @@ package main
 
 import (
 	"bytes"
-	"encoding/base64"
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"strings"
 	"sync"
@@ -62,16 +60,16 @@ type reqBody struct {
 func (p *Plugin) ServeHTTP(c *plugin.Context, w http.ResponseWriter, r *http.Request) {
 
 	switch r.URL.Path {
-	case "/configuration-data":
-		configuration := p.getConfiguration()
-		config_enc, err := json.Marshal(configuration)
-		if err != nil {
-			// if error is not nil
-			// print error
-			fmt.Println(err)
-		}
-		encoded := base64.StdEncoding.EncodeToString([]byte(string(config_enc)))
-		fmt.Fprint(w, encoded)
+	// case "/configuration-data":
+	// 	configuration := p.getConfiguration()
+	// 	config_enc, err := json.Marshal(configuration)
+	// 	if err != nil {
+	// 		// if error is not nil
+	// 		// print error
+	// 		fmt.Println(err)
+	// 	}
+	// 	encoded := base64.StdEncoding.EncodeToString([]byte(string(config_enc)))
+	// 	fmt.Fprint(w, encoded)
 	default:
 		http.NotFound(w, r)
 	}

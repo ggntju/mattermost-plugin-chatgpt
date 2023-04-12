@@ -111,7 +111,7 @@ export default class AdminSetting extends React.Component {
     render() {
         return (
             <React.Fragment>
-                {
+                {/* {
                     <div style={style.text}>
                         {'OPENAI Website'}
                     </div>
@@ -125,7 +125,7 @@ export default class AdminSetting extends React.Component {
                         disabled={this.props.disabled || this.props.setByEnv}
                         onInput={this.handleWebsiteURLChange}
                     />
-                }
+                } */}
 
                 {
                     <div style={style.text}>
