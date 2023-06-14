@@ -25,12 +25,19 @@
         "footer": "",
         "settings": [
             {
-                "key": "AdminSetting",
+                "key": "adminsetting",
                 "display_name": "",
                 "type": "custom",
                 "help_text": "",
                 "placeholder": "",
-                "default": null
+                "default": {
+                    "SECRET_KEY": "",
+                    "PROXY_URL": "",
+                    "WEBSITE_URL": "",
+                    "BOT_TOKEN": "",
+                    "BOT_USERNAME": "",
+                    "BOT_USERID": ""
+                }
             }
         ]
     }
